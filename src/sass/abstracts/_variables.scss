@@ -1,0 +1,51 @@
+// Fonts
+$font-serif:      'Source Serif Pro', serif;
+$font-sans-serif: 'Nunito', sans-serif;
+
+// Colors
+$blue:            #0439d7 !default;
+$blue-dark:       #080f8c !default;
+$blue-light:      #3898ec !default;
+$yellow:          #ff0 !default;
+$white:           #fff !default;
+$gray-lighter:    #ededef !default;
+$gray-light:      #cfd3da !default;
+$gray:            #8f8f8f !default;
+$gray-dark:       #333 !default;
+$black:           #000 !default;
+
+// Media breakpoints
+$media-breakpoints: (
+	xs: 480px,
+	sm: 640px,
+	md: 767px,
+	lg: 990px,
+	xl: 1200px
+) !default;
+
+// Spacing
+$spacer: 1rem !default;
+$spacers: (
+	0: 0,
+	1: ($spacer * .1875),
+	2: ($spacer * .3125),
+	3: ($spacer * .625),
+	4: ($spacer * 1.25),
+	5: ($spacer * 1.875),
+	6: ($spacer * 2.5),
+	7: ($spacer * 3.125),
+	8: ($spacer * 3.75)
+) !default;
+
+// Container max widths
+$container-sizes: (
+	xsmall: 460px,
+	small:  728px,
+	medium: 780px,
+	large:  940px
+) !default;
+
+// Grid
+$grid-cells: 12 !default;
+$grid-gap: 1.25rem !default;
+$grid-gap-large: 1.875rem !default;

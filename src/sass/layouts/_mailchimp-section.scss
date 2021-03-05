@@ -1,0 +1,86 @@
+// Form section
+.newsletter-section {
+	.section__body,
+	.section__form {
+		max-width: container-max-width(small);
+
+		@include media-breakpoint-down(md) {
+			max-width: container-max-width(xsmall);
+		}
+	}
+
+	.section__title {
+		&__title {
+			font-size: 2.1875em;
+	
+			@include media-breakpoint-down(lg) {
+				font-size: 1.6875em;
+			}
+		}
+	}
+}
+
+.mc-form {
+	input {
+		font-size: 14px;
+	}
+
+	.checkbox-field {
+		position: relative;
+
+		@include media-breakpoint-up(lg) {
+			order: 10;
+			width: 100%;
+		}
+	}
+
+	.checkbox-custom-input {
+		border: 1px solid $gray-light;
+		border-radius: 4px;
+		box-sizing: border-box;
+		cursor: pointer;
+		height: 20px;
+		position: relative;
+		width: 20px;
+	}
+
+	.checkbox-label {
+		cursor: pointer;
+		font-size: 0.75em;
+		padding-left: 10px;
+	}
+
+	.checkbox-input {
+		opacity: 0;
+		position: absolute;
+		z-index: -1;
+
+		&:checked + .checkbox-custom-input {
+			background-color: $blue-light;
+			border-color: $blue-light;
+
+			&:after {
+				border-bottom: solid 2px $white;
+				border-left: solid 2px $white;
+				content: ' ';
+				height: 6px;
+				left: 2px;
+				position: absolute;
+				top: 3px;
+				transform: rotate(-45deg);
+				width: 12px;
+			}
+		}
+	}
+
+	.btn {
+		font-size: 0.875em;
+		min-width: 150px;
+		padding: 0.57857em 1em;
+		text-transform: none;
+
+		@include media-breakpoint-down(lg) {
+			width: 100%;
+		}
+	}
+}

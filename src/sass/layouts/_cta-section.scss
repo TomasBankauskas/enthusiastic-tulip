@@ -1,0 +1,34 @@
+// CTA section
+.cta {
+	&__image {
+		align-self: flex-end;
+
+		img {
+			display: block;
+			max-width: 300px;
+		}
+	}
+
+	&__body {
+		&:not(:only-child) {
+			@include media-breakpoint-down(md) {
+				padding-bottom: 0;
+			}
+		}
+	}
+
+	&__title {
+		color: $blue;
+		font-size: 2.1875em;
+
+		@include media-breakpoint-down(lg) {
+			font-size: 1.6875em;
+		}
+	}
+
+	&.bg-blue {
+		.cta__title {
+			color: $white;
+		}
+	}
+}

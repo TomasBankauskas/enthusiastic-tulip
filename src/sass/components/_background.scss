@@ -1,0 +1,64 @@
+// Alternative section backgrounds
+.bg-blue {
+	background: $blue;
+	color: $white;
+
+	a {
+		color: inherit;
+
+		&:hover {
+			color: $blue-dark;
+		}
+	}
+
+	.btn {
+		background-color: transparent;
+		border-color: $white;
+		color: $white;
+
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: $white;
+			color: $blue;
+		}
+
+		&--icon {
+			&.btn--primary {
+				background-color: $white;
+				color: $blue;
+
+				&:hover,
+				&:focus,
+				&:active {
+					background-color: $white;
+					color: $blue;
+				}
+			}
+		}
+
+		&--clear {
+			color: inherit;
+
+			&:hover,
+			&:focus,
+			&:active {
+				color: $blue-dark;
+			}
+		}
+	}
+
+	blockquote,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: inherit;
+	}
+}
+
+.bg-gray {
+	background: $gray-lighter;
+}

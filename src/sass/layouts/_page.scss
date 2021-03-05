@@ -1,0 +1,16 @@
+.page {
+	&__header,
+	&__body {
+		@include media-breakpoint-down(lg) {
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 83.333%;
+		}
+	
+		@include media-breakpoint-down(md) {
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 100%;
+		}
+	}
+}

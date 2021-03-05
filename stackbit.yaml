@@ -1,0 +1,1105 @@
+stackbitVersion: ~0.3.0
+ssgName: gatsby
+ssgVersion: 2.3.30
+buildCommand: npm run build
+publishDir: public
+staticDir: static
+uploadDir: images
+dataDir: src/data
+pagesDir: src/pages
+pageLayoutKey: template
+logicFields:
+  - blog_feed_section.recent_count
+models:
+  config:
+    type: config
+    label: Site configuration
+    fields:
+      - type: string
+        name: title
+        label: Title
+        description: Site title
+        required: true
+      - type: string
+        name: domain
+        label: Domain
+        description: >-
+          The domain of your site, including the protocol, e.g.
+          https://mysite.com/
+      - type: image
+        name: favicon
+        label: Favicon
+        description: A square icon that represents your website
+      - type: model
+        name: header
+        label: Header configuration
+        models:
+          - header
+      - type: model
+        name: footer
+        label: Footer configuration
+        models:
+          - footer
+  header:
+    type: object
+    label: Header configuration
+    labelField: title
+    fields:
+      - type: image
+        name: logo
+        label: Logo
+        description: The logo image displayed in the header
+      - type: string
+        name: logo_alt
+        label: Logo Alt Text
+        description: The alt text of the logo image
+      - type: string
+        name: title
+        label: Title
+        description: The title displayed in the header
+      - type: string
+        name: subtitle
+        label: Subtitle
+        description: The subtitle displayed in the header below the logo/title
+      - type: boolean
+        name: has_left_nav
+        label: Enable left navigation
+        description: Display the navigation menu on the left side
+        default: true
+      - type: list
+        name: left_nav_links
+        label: Left navigation links
+        description: A list of navigation menu links
+        items:
+          type: model
+          models:
+            - action
+      - type: boolean
+        name: has_hidden_nav
+        label: Enable hidden navigation
+        description: Display the hidden navigation menu on the right side
+        default: true
+      - type: list
+        name: hidden_nav_link_groups
+        label: Hidden navigation link groups
+        description: Hidden navigation menu link groups
+        items:
+          type: model
+          models:
+            - nav_links_group
+  footer:
+    type: object
+    label: Footer configuration
+    labelField: content
+    fields:
+      - type: image
+        name: logo
+        label: Logo
+        description: The logo image displayed in the footer
+      - type: string
+        name: logo_alt
+        label: Logo Alt Text
+        description: The alt text of the logo image
+      - type: string
+        name: title
+        label: Footer title
+        description: The title displayed in the background of the footer
+      - type: boolean
+        name: has_nav
+        label: Enable navigation
+        description: Display the navigation menu
+        default: true
+      - type: list
+        name: nav_links
+        label: Navigation links
+        description: A list of navigation menu links
+        items:
+          type: model
+          models:
+            - action
+      - type: boolean
+        name: has_social
+        label: Enable social links
+        description: Display the social links
+        default: true
+      - type: list
+        name: social_links
+        label: Social links
+        description: A list of social links
+        items:
+          type: model
+          models:
+            - action
+      - type: string
+        name: content
+        label: Footer content
+        description: The copyright text
+      - type: list
+        name: links
+        label: Links
+        description: A list of links displayed next to the copyright text
+        items:
+          type: model
+          models:
+            - action
+  person:
+    type: data
+    label: Person
+    folder: team
+    fields:
+      - type: string
+        name: id
+        label: ID
+        description: 'A unique identifier used when filtering posts, e.g. "john-doe"'
+        required: true
+      - type: string
+        name: link
+        label: Link
+        description: 'The link to the author page, e.g. "articles/author/john-doe"'
+      - type: string
+        name: first_name
+        label: First name
+        required: true
+      - type: string
+        name: last_name
+        label: Last name
+  category:
+    type: data
+    label: Category
+    folder: categories
+    fields:
+      - type: string
+        name: id
+        label: ID
+        description: 'A unique identifier used when filtering posts, e.g. "news"'
+        required: true
+      - type: string
+        name: link
+        label: Link
+        description: 'The link to the category page, e.g. "articles/category/news"'
+      - type: string
+        name: title
+        label: Title
+        required: true
+        description: The title of the category
+  page:
+    type: page
+    label: Page
+    layout: page
+    exclude: articles/**/*
+    fields:
+      - type: string
+        name: title
+        label: Title
+        description: The title of the page
+        required: true
+  post:
+    type: page
+    urlPath: '/articles/{slug}'
+    label: Post
+    layout: post
+    folder: articles
+    exclude:
+      - index.md
+      - category/**
+      - author/**
+    fields:
+      - type: string
+        name: title
+        label: Title
+        description: The title of the post
+        required: true
+      - type: date
+        name: date
+        label: Date
+        description: The publish date of the post
+        required: true
+      - type: string
+        name: credits
+        label: Credits
+        description: The info about post contributors
+      - type: reference
+        name: author
+        label: Author
+        description: The author of the post
+        models:
+          - person
+      - type: reference
+        name: category
+        label: Category
+        description: The category of the post
+        models:
+          - category
+      - type: string
+        name: excerpt
+        label: Excerpt
+        description: The excerpt of the post
+      - type: image
+        name: thumb_image
+        label: Image (blog feed)
+        description: The image shown in the blog feed
+      - type: string
+        name: thumb_image_alt
+        label: Image alt text (blog feed)
+        description: The alt text of the blog feed image
+      - type: image
+        name: image
+        label: Image (single post)
+        description: The image displayed in the single post
+      - type: string
+        name: image_alt
+        label: Image alt text (single post)
+        description: The alt text of the featured image
+      - type: enum
+        name: image_position
+        label: Image position (single post)
+        options:
+          - left
+          - right
+          - top
+        default: top
+        description: >-
+          The featured image position in the blog post relative to the post
+          header content
+      - type: list
+        name: sections
+        label: Sections
+        description: Post sections
+        items:
+          type: model
+          labelField: title
+          models:
+            - read_more_section
+            - cta_section
+            - mailchimp_newsletter_section
+  advanced:
+    type: page
+    label: Advanced page
+    layout: advanced
+    hideContent: true
+    fields:
+      - type: string
+        name: title
+        label: Title
+        description: The title of the page
+        required: true
+      - type: list
+        name: sections
+        label: Sections
+        description: Page sections
+        items:
+          type: model
+          labelField: title
+          models:
+            - hero_section
+            - features_section
+            - grid_section
+            - blog_feed_section
+            - selected_posts_section
+            - featured_posts_section
+            - cta_section
+            - mailchimp_newsletter_section
+            - form_section
+  section:
+    type: object
+    label: Section
+    labelField: title
+    fields:
+      - type: enum
+        name: padding_top
+        label: Section top padding
+        options:
+          - none
+          - small
+          - medium
+          - large
+        default: medium
+        description: The padding area (space) on the top of the section
+      - type: enum
+        name: padding_bottom
+        label: Section bottom padding
+        options:
+          - none
+          - small
+          - medium
+          - large
+        default: medium
+        description: The padding area (space) on the bottom of the section
+      - type: string
+        name: title
+        label: Title
+        description: The title of the section
+      - type: string
+        name: subtitle
+        label: Subtitle
+        description: The subtitle of the section displayed below the title
+  hero_section:
+    type: object
+    label: Hero section
+    extends:
+      - section
+    fields:
+      - type: list
+        name: actions
+        label: Action buttons
+        items:
+          type: model
+          models:
+            - action
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: >-
+          The horizontal alignment of the section title, subtitle and action
+          buttons
+      - type: image
+        name: image
+        label: Image
+        description: The image of the section
+      - type: string
+        name: image_alt
+        label: Image alt text
+        description: The alt text of the section image
+      - type: html
+        name: video_embed_html
+        label: Video Embed Code
+        description: The HTML embed code for your video
+      - type: enum
+        name: media_position
+        label: Image/video position
+        options:
+          - left
+          - right
+          - top
+          - bottom
+        default: left
+        description: The position of the image/video relative to the text content
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - blue
+          - gray
+        default: none
+        description: The background color of the section
+  features_section:
+    type: object
+    label: Features section
+    extends:
+      - section
+    fields:
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: The horizontal alignment of the section title and subtitle
+      - type: list
+        name: features
+        label: Features
+        items:
+          type: model
+          models:
+            - feature
+      - type: enum
+        name: feature_padding_bottom
+        label: Feature bottom padding
+        options:
+          - small
+          - medium
+          - large
+        default: medium
+        description: The padding area (space) on the bottom of each feature
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - blue
+          - gray
+        default: none
+        description: The background color of the section
+  grid_section:
+    type: object
+    label: Grid section
+    extends:
+      - section
+    fields:
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: The horizontal alignment of the section title and subtitle
+      - type: list
+        name: grid_items
+        label: Grid items
+        items:
+          type: model
+          models:
+            - grid_item
+      - type: enum
+        name: grid_cols
+        label: Grid columns
+        options:
+          - two
+          - three
+          - four
+        default: two
+        description: Show the specified number of items in a grid row
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - blue
+          - gray
+        default: none
+        description: The background color of the section
+  blog_feed_section:
+    type: object
+    label: Blog feed section
+    extends:
+      - section
+    fields:
+      - type: list
+        name: actions
+        label: Action buttons
+        items:
+          type: model
+          models:
+            - action
+        description: Action buttons displayed below posts
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: >-
+          The horizontal alignment of the section title, subtitle and action
+          buttons
+      - type: enum
+        name: blog_feed_cols
+        label: Posts grid columns
+        options:
+          - two
+          - three
+          - four
+        default: four
+        description: Show the specified number of posts in a posts grid row
+      - type: boolean
+        name: show_recent
+        label: Show recent posts only
+        description: >-
+          Show the specified number of recent posts. Should not be used with
+          author and category filters
+        default: false
+        required: true
+      - type: number
+        name: recent_count
+        label: Number of recent posts to show
+      - type: reference
+        name: author
+        label: Author filter
+        description: Filter posts by an author
+        models:
+          - person
+      - type: reference
+        name: category
+        label: Category filter
+        description: Filter posts by a category
+        models:
+          - category
+      - type: boolean
+        name: show_date
+        label: Show date
+        description: Show the publish date of the post
+        default: true
+      - type: boolean
+        name: show_category
+        label: Show category
+        description: Show the category of the post
+        default: false
+      - type: boolean
+        name: show_author
+        label: Show author
+        description: Show the author of the post
+        default: false
+      - type: boolean
+        name: show_excerpt
+        label: Show excerpt
+        description: Show the excerpt of the post
+        default: false
+      - type: boolean
+        name: show_image
+        label: Show image
+        description: Show the post image thumbnail
+        default: true
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - gray
+        default: none
+        description: The background color of the section
+  selected_posts_section:
+    type: object
+    label: Selected posts section
+    extends:
+      - section
+    fields:
+      - type: list
+        name: actions
+        label: Action buttons
+        items:
+          type: model
+          models:
+            - action
+        description: Action buttons displayed below blog posts
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: >-
+          The horizontal alignment of the section title, subtitle and action
+          buttons
+      - type: list
+        name: posts
+        label: Posts
+        description: The list of selected posts
+        items:
+          type: reference
+          models:
+            - post
+      - type: enum
+        name: blog_feed_cols
+        label: Posts grid columns
+        options:
+          - two
+          - three
+          - four
+        default: four
+        description: Show the specified number of posts in a posts grid row
+      - type: boolean
+        name: show_date
+        label: Show date
+        description: Show the publish date of the post
+        default: true
+      - type: boolean
+        name: show_category
+        label: Show category
+        description: Show the category of the post
+        default: false
+      - type: boolean
+        name: show_author
+        label: Show author
+        description: Show the author of the post
+        default: false
+      - type: boolean
+        name: show_excerpt
+        label: Show excerpt
+        description: Show the excerpt of the post
+        default: false
+      - type: boolean
+        name: show_image
+        label: Show image
+        description: Show the post image thumbnail
+        default: true
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - gray
+        default: none
+        description: The background color of the section
+  featured_posts_section:
+    type: object
+    label: Featured posts section
+    extends:
+      - section
+    fields:
+      - type: list
+        name: actions
+        label: Action buttons
+        items:
+          type: model
+          models:
+            - action
+        description: Action buttons displayed below posts
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: >-
+          The horizontal alignment of the section title, subtitle and action
+          buttons
+      - type: list
+        name: posts
+        label: Posts
+        description: The list of selected posts
+        items:
+          type: reference
+          models:
+            - post
+      - type: boolean
+        name: show_date
+        label: Show date
+        description: Show the publish date of the post
+        default: true
+      - type: boolean
+        name: show_category
+        label: Show category
+        description: Show the category of the post
+        default: false
+      - type: boolean
+        name: show_author
+        label: Show author
+        description: Show the author of the post
+        default: false
+      - type: boolean
+        name: show_excerpt
+        label: Show excerpt
+        description: Show the excerpt of the post
+        default: false
+      - type: boolean
+        name: show_image
+        label: Show image
+        description: Show the post image thumbnail
+        default: true
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - gray
+        default: none
+        description: The background color of the section
+  read_more_section:
+    type: object
+    label: Read more section
+    extends:
+      - section
+    fields:
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: The horizontal alignment of the section title and subtitle
+      - type: enum
+        name: blog_feed_cols
+        label: Posts grid columns
+        options:
+          - two
+          - three
+          - four
+        default: four
+        description: Show the specified number of posts in a posts grid row
+      - type: boolean
+        name: show_date
+        label: Show date
+        description: Show the publish date of the post
+        default: true
+      - type: boolean
+        name: show_category
+        label: Show category
+        description: Show the category of the post
+        default: false
+      - type: boolean
+        name: show_author
+        label: Show author
+        description: Show the author of the post
+        default: false
+      - type: boolean
+        name: show_excerpt
+        label: Show excerpt
+        description: Show the excerpt of the post
+        default: false
+      - type: boolean
+        name: show_image
+        label: Show image
+        description: Show the post image thumbnail
+        default: true
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - gray
+        default: none
+        description: The background color of the section
+  cta_section:
+    type: object
+    label: CTA section
+    extends:
+      - section
+    fields:
+      - type: list
+        name: actions
+        label: Action buttons
+        items:
+          type: model
+          models:
+            - action
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: >-
+          The horizontal alignment of the section title, subtitle and action
+          buttons
+      - type: image
+        name: image
+        label: Image
+        description: The image of the section
+      - type: string
+        name: image_alt
+        label: Image alt text
+        description: The alt text of the section image
+      - type: enum
+        name: image_position
+        label: Image position
+        options:
+          - left
+          - right
+        default: left
+        description: The position of the image relative to the text content
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - blue
+          - gray
+        default: none
+        description: The background color of the section
+  mailchimp_newsletter_section:
+    type: object
+    label: Mailchimp newsletter section
+    extends:
+      - section
+    fields:
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: The horizontal alignment of the section title and subtitle
+      - type: string
+        name: form_id
+        label: Form ID
+        description: A unique identifier of the form. Must not contain whitespace
+        required: true
+      - type: string
+        name: form_action
+        label: Form action
+        description: Mailchimp form action URL
+      - type: string
+        name: email_label
+        label: Email field label
+        required: true
+      - type: string
+        name: email_placeholder
+        label: Email field placeholder text
+        required: true
+      - type: string
+        name: confirmation_label
+        label: Confirmation checkbox label
+        required: true
+      - type: string
+        name: submit_label
+        label: Submit button label
+        required: true
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - blue
+          - gray
+        default: none
+        description: The background color of the section
+  form_section:
+    type: object
+    label: Form section
+    extends:
+      - section
+    fields:
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: The horizontal alignment of the section title and subtitle
+      - type: string
+        name: form_id
+        label: Form ID
+        description: A unique identifier of the form. Must not contain whitespace
+        required: true
+      - type: string
+        name: form_action
+        label: Form action
+        description: >-
+          The path of your custom "success" page, if you want to replace the
+          default success message.
+      - type: list
+        name: form_fields
+        label: Form fields
+        items:
+          type: model
+          models:
+            - form_field
+      - type: string
+        name: submit_label
+        label: Submit button label
+        required: true
+      - type: enum
+        name: background_color
+        label: Background color
+        options:
+          - none
+          - blue
+          - gray
+        default: none
+        description: The background color of the section
+  feature:
+    type: object
+    label: Feature
+    labelField: title
+    fields:
+      - type: string
+        name: title
+        label: Title
+        description: The title of the feature
+      - type: markdown
+        name: content
+        label: Content
+        description: The text content of the feature
+      - type: list
+        name: actions
+        label: Action buttons
+        items:
+          type: model
+          models:
+            - action
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: >-
+          The horizontal alignment of the feature title, content and action
+          buttons
+      - type: image
+        name: image
+        label: Image
+        description: The image of the feature
+      - type: string
+        name: image_alt
+        label: Image alt text
+        description: The alt text of the feature image
+      - type: html
+        name: video_embed_html
+        label: Video Embed Code
+        description: The HTML embed code for your video
+      - type: enum
+        name: media_position
+        label: Image/video position
+        options:
+          - left
+          - right
+          - top
+          - bottom
+        default: left
+        description: The position of the image/video relative to the text content
+  grid_item:
+    type: object
+    label: Feature
+    labelField: title
+    fields:
+      - type: string
+        name: title
+        label: Title
+        description: The title of the feature
+      - type: markdown
+        name: content
+        label: Content
+        description: The text content of the feature
+      - type: list
+        name: actions
+        label: Action buttons
+        items:
+          type: model
+          models:
+            - action
+      - type: image
+        name: image
+        label: Image
+        description: The image of the feature
+      - type: string
+        name: image_alt
+        label: Image alt text
+        description: The alt text of the feature image
+      - type: html
+        name: video_embed_html
+        label: Video Embed Code
+        description: The HTML embed code for your video
+      - type: enum
+        name: align
+        label: Horizontal alignment
+        options:
+          - left
+          - center
+        default: left
+        description: The horizontal alignment of the item content
+  form_field:
+    type: object
+    label: Form field
+    labelField: name
+    fields:
+      - type: enum
+        name: input_type
+        label: Type
+        options:
+          - text
+          - email
+          - tel
+          - number
+          - checkbox
+          - select
+          - textarea
+        description: Type of the form field
+        required: true
+      - type: string
+        name: name
+        label: Name
+        description: 'The name of the field, submitted with the form'
+        required: true
+      - type: string
+        name: label
+        label: Label
+        description: The caption of the field
+      - type: string
+        name: default_value
+        label: Placeholder text or default value
+        description: >-
+          The placeholder for textual field types or default option for select
+          field
+      - type: list
+        name: options
+        description: 'The list of options, used only when the field type is "select"'
+      - type: boolean
+        name: is_required
+        label: Is the field required?
+        default: false
+  nav_links_group:
+    type: object
+    label: Navigation links group
+    fields:
+      - type: enum
+        name: font_size
+        label: Font size
+        options:
+          - regular
+          - large
+        default: regular
+        description: The font size of navigation links group
+      - type: enum
+        name: divider
+        label: Divider
+        options:
+          - none
+          - thin
+          - thick
+        default: none
+        description: A horizontal line below the navigation links group
+      - type: list
+        name: nav_links
+        label: Navigation links
+        description: A list of navigation links
+        items:
+          type: model
+          models:
+            - action
+  action:
+    type: object
+    label: Action
+    labelField: label
+    fields:
+      - type: string
+        name: label
+        label: Label
+        required: true
+      - type: string
+        name: url
+        label: URL
+        required: true
+        widget: url
+      - type: enum
+        name: style
+        label: Style
+        options:
+          - link
+          - button
+        default: link
+        required: true
+      - type: boolean
+        name: has_icon
+        label: Show icon
+        default: false
+      - type: enum
+        name: icon
+        label: Icon
+        options:
+          - arrow-left
+          - arrow-right
+          - facebook
+          - github
+          - instagram
+          - linkedin
+          - twitter
+          - vimeo
+          - youtube
+      - type: enum
+        name: icon_position
+        label: Icon position
+        options:
+          - left
+          - right
+          - center
+        default: right
+        description: Select "center" to display icon only and hide the label
+      - type: boolean
+        name: new_window
+        label: Open in new tab/window
+        default: false

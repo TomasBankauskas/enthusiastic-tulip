@@ -1,0 +1,77 @@
+.post-card {
+	&__image {
+		position: relative;
+	
+		img {
+			display: block;
+			width: 100%;
+		}
+	
+		&:hover {
+			.post-card__overlay {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+
+	&__overlay {
+		background-color: rgba($blue, .78);
+		bottom: 0;
+		content: "";
+		-webkit-filter: contrast(200%);
+		filter: contrast(200%);
+		left: 0;
+		opacity: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transition: .3s ease-out;
+		visibility: hidden;
+		z-index: 1;
+	}
+
+	&__overlay-text {
+		border-bottom: 1px solid currentColor;
+		color: $white;
+		left: 50%;
+		line-height: 1.2;
+		position: absolute;
+		top: 50%;
+		text-transform: uppercase;
+		transform: translate(-50%, -50%);
+	}
+
+	&__title {
+		color: $black;
+
+		a {
+			&:hover {
+				color: $blue;
+			}
+		}
+	}
+
+	&__cat,
+	&__meta {
+		font-size: 0.875em;
+
+		a {
+			color: inherit;
+		}
+	}
+
+	&__cat {
+		color: $gray-dark;
+		text-transform: uppercase;
+	}
+	
+	&__meta {
+		color: $gray;
+	}
+
+	&__copy {
+		color: $black;
+		line-height: 1.25;
+	}
+}

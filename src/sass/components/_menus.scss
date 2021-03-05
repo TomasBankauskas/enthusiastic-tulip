@@ -1,0 +1,21 @@
+.menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.menu__item {
+	line-height: 1.2;
+
+	a {
+		&:not(.btn) {
+			display: inline-block;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		&:not(.btn--icon) {
+			font-size: 0.875em;
+		}
+	}
+}

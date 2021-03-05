@@ -1,0 +1,46 @@
+.site-footer {
+	position: relative;
+	z-index: 1;
+
+	&.bg-text {
+		padding-top: 9.375em;
+	}
+
+	&__text {
+		bottom: 0;
+		color: rgba($white, .1);
+		font-family: $font-serif;
+		font-size: 15vw;
+		font-weight: bold;
+		height: 50%;
+		left: 0;
+		letter-spacing: 1vw;
+		line-height: 100%;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: -1;
+	}
+
+	&__social {
+		.btn--icon {
+			font-size: 1.875em;
+		}
+	}
+
+	&__logo {
+		img {
+			display: inline-block;
+			margin: 0 auto;
+			max-height: 2em;
+		}
+	}
+
+	&__info {
+		font-size: 0.875em;
+	
+		a {
+			margin-right: 5px;
+		}
+	}
+}

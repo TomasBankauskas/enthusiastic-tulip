@@ -1,0 +1,6 @@
+// Element max width
+@each $key, $size in $container-sizes {
+	.maxw-#{$key} {
+		max-width: #{$size};
+	}
+}

@@ -1,0 +1,98 @@
+// Button Styles
+.btn {
+	align-items: center;
+	background-color: $blue;
+	border: 2px solid $blue;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: $white;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 1em;
+	font-weight: normal;
+	justify-content: center;
+	letter-spacing: 0.015em;
+	line-height: 1.2;
+	padding: 0.5875em 0.9375em;
+	text-decoration: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+
+	&:hover,
+	&:focus,
+	&:active {
+		background-color: transparent;
+		color: $blue;
+		outline: 0;
+	}
+
+	.icon {
+		margin-left: 5px;
+	}
+
+	&--reversed {
+		flex-direction: row-reverse;
+
+		.icon {
+			margin-left: 0;
+			margin-right: 5px;
+		}
+	}
+
+	.sr-only + .icon {
+		margin: 0;
+	}
+
+	&--icon {
+		border-radius: 50%;
+		font-size: 1em;
+		height: 1.66667em;
+		padding: 0;
+		position: relative;
+		width: 1.66667em;
+
+		&.btn--primary {
+			&:hover,
+			&:focus,
+			&:active {
+				background-color: $blue;
+				color: $white;
+			}
+		}
+	}
+
+	&--clear {
+		background: 0 !important;
+		border: 0;
+		border-radius: 0;
+		color: $blue;
+		padding: 0;
+
+		&:hover,
+		&:focus,
+		&:active {
+			color: $blue-dark;
+		}
+	}
+
+	&-group {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+
+		a,
+		.btn {
+			letter-spacing: 0.015em;
+			margin: 0 0.625em 0.625em 0;
+			text-transform: uppercase;
+		}
+	
+		&.justify-center {
+			a,
+			.btn {
+				margin-left: 0.3125em;
+				margin-right: 0.3125em;
+			}
+		}
+	}
+}
